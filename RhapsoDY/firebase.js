@@ -27,5 +27,5 @@ const db = getDatabase(app);
 
 export { app }
 export { auth }
-export { storage}
+export { storage }
 export { db }

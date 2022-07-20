@@ -8,7 +8,7 @@ import DMConversations from './DMConversations';
 
 export default function DirectMessageHome({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#8fbc8f', marginBottom: 5 }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'honeydew', marginBottom: 5 }}>
       <Button 
         title="Go to Contacts"
         onPress={() => navigation.navigate('DMContacts')}
