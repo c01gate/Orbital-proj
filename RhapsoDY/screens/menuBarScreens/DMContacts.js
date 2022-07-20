@@ -11,7 +11,7 @@ const DATA = UsersList();
 export default function DMContacts({ navigation }) {
   console.log("List",DATA);
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ backgroundColor:'honeydew', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <FlatList
             keyExtractor={(item) => item.uuid}
             data={DATA}
@@ -32,8 +32,10 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 10,
         marginTop: 24,
-        padding: 30,
-        backgroundColor: 'aquamarine',
+        padding: 10,
+        backgroundColor: 'transparent',
         fontSize: 24,
+        borderRadius: 25,
+        borderWidth: 1
     },
 });
