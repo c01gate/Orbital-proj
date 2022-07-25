@@ -9,6 +9,9 @@ import ProductInfo from './screens/menuBarScreens/ProductInfo';
 import MyFave from './screens/menuBarScreens/MyFave';
 import RegisterAccount from './screens/RegisterAccount';
 import Header from './shared/HeaderBar';
+import ProfileScreen from './screens/ProfileScreen';
+import UpdateProfileScreen from './screens/UpdateProfileScreen';
+import DisplayListing from './screens/DisplayListing';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,10 +21,14 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen options= {{ headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options= {{ headerShown: false}} name="RegisterAccount" component={RegisterAccount} />
-        <Stack.Screen options = {{ headerShown: false}} name="Main" component={MainContainer} />
+        <Stack.Screen options = {{ headerShown: false}} name="Main" component={MainContainer} /> 
         <Stack.Screen options = {{ headerShown: false}} name="Header" component={Header} />
+        <Stack.Screen name="Profile Overview" component={ProfileScreen} />
+        <Stack.Screen name="Update Profile" component={UpdateProfileScreen} />
+        <Stack.Screen name="Your Listings" component={DisplayListing} />
         <Stack.Screen name = "ProductInfo" component = {ProductInfo} />
-        <Stack.Screen name= "MyFave" component= {MyFave} />  
+        <Stack.Screen name= "MyFave" component= {MyFave} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

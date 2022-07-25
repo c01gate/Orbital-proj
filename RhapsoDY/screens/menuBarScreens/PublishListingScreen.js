@@ -4,17 +4,22 @@ import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { uploadImageAsync } from '../AddListingStorage';
 import { updateListingDatabase } from '../UpdateListingDatabase';
+import { getDownloadURL, ref, child } from 'firebase/storage';
+import { storage } from '../../firebase';
 
 export default function PublishListingScreen({ navigation }) {
   const [titleText, setText] = useState('');
   const [descriptionText, setDText] = useState('');
   const [materialText, setMText] = useState('');
   const [sourceText, setSText] = useState('');
+  const [priceText, setPText] = useState('');
   const [selected, setSelected] = useState(null);
   const handleSelected = (value) => {
     setSelected(value);
   };
   const [image, setImage] = useState(null);
+  const downloadArr = [];
+
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -30,17 +35,19 @@ export default function PublishListingScreen({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri);
-      const pathName = await uploadImageAsync(result.uri)  
+      const pathName = await uploadImageAsync(result.uri)
+      const downloadURL = getDownloadURL(child(ref(storage, 'listings/', (result.uri.split('/').pop(-1).jpg))))
+      downloadArr.push(downloadURL)
     }
-
+    
 };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
 
-      <View style={{ width: '70%', justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ width: '70%', justifyContent: 'center', alignItems: 'center', margin: 70 }}>
       <Button title="Pick an image from camera roll" onPress={pickImage} style={{ borderWidth: 1, borderColor: 'black'}} />
-        {image && <Image source={{ uri: image }} style={{ width: 130, height: 130, marginTop: 20, marginBottom: 10 }} />}
+        {image && <Image source={{ uri: image }} style={{ width: 130, height: 130, marginBottom: 10 }} />}
 
         <TextInput 
         style={styles.titleInput}
@@ -82,6 +89,15 @@ export default function PublishListingScreen({ navigation }) {
           multiline={true}>
         </TextInput>
 
+        <TextInput 
+          style={styles.priceInput}
+          placeholder='Enter price for listing'
+          placeholderTextColor="grey"
+          onChangeText={newPText => setPText(newPText)} 
+          defaultValue={priceText}
+          multiline={true}>
+        </TextInput>
+
         <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 10}}>
           <ListingStateButton
             title={'Brand new item'}
@@ -98,7 +114,7 @@ export default function PublishListingScreen({ navigation }) {
         <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 10}}>
           <TouchableOpacity
                 style={styles.saveButton}
-                onPress={()=>{updateListingDatabase(titleText, descriptionText, materialText, sourceText, selected)}}>
+                onPress={()=>{updateListingDatabase(titleText, descriptionText, materialText, sourceText, selected, priceText),navigation.navigate('Home')}}>
                 <Text style={styles.buttonText}>
                   Save
                 </Text>
@@ -106,7 +122,7 @@ export default function PublishListingScreen({ navigation }) {
 
           <TouchableOpacity
                 style={styles.cancelButton}
-                onPress={()=>{navigation.navigate('Home')}}>
+                onPress={()=>navigation.navigate('Home')}>
                 <Text style={styles.buttonText}>
                   Cancel
                 </Text>
@@ -139,8 +155,9 @@ const styles = StyleSheet.create({
   },
 
   titleInput: {
+    width: '100%',
     backgroundColor: 'honeydew',
-    fontSize: 25,
+    fontSize: 20,
     padding: 5,
     borderColor: 'black',
     borderWidth: 1,
@@ -148,6 +165,7 @@ const styles = StyleSheet.create({
   },
 
   descriptionInput: {
+    width: '100%',
     marginTop: 10,
     backgroundColor: 'white',
     fontSize: 20,
@@ -158,6 +176,7 @@ const styles = StyleSheet.create({
   },
 
   materialInput: {
+    width: '100%',
     marginTop: 10,
     backgroundColor: 'white',
     fontSize: 20,
@@ -168,6 +187,18 @@ const styles = StyleSheet.create({
   },
     
   sourceInput: {
+    width: '100%',
+    marginTop: 10,
+    backgroundColor: 'white',
+    fontSize: 20,
+    padding: 5,
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+
+  priceInput: {
+    width: '100%',
     marginTop: 10,
     backgroundColor: 'white',
     fontSize: 20,
@@ -182,8 +213,8 @@ const styles = StyleSheet.create({
     width: 125,
     height: 40,
     backgroundColor: '#fff',
+    marginTop: 10,
     borderRadius: 8,
-    margin: 4,
     padding: 11,
   },
 
@@ -203,7 +234,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    fontSize:25
+    fontSize:20
   },
 
   cancelButton: {

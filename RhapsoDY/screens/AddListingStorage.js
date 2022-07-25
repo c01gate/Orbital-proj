@@ -19,7 +19,7 @@ export const uploadImageAsync = async (uri) => {
         console.log('Uploaded a blob or file!');
         getDownloadURL(snapshot.ref).then((downloadURL) => {
             console.log('File available at', downloadURL);
-            addListingDatabase("", "", "", "", "", downloadURL)
+            addListingDatabase("", "", "", "", "", "", downloadURL)
         })
     });
 };

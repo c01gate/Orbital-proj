@@ -21,7 +21,7 @@ export default function Header() {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.profileButton}
-          onPress={() => { } }>
+          onPress={() => {navigation.navigate('Profile Overview')} }>
             <Ionicons name="person-outline" size={30} color="black" />
           </TouchableOpacity>
 

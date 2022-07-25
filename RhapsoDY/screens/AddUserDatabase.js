@@ -1,10 +1,10 @@
 import { db } from "../firebase";
 import { ref, set } from "firebase/database";
 
-export function addUserData(userID, email, displayName, imageURL) {
+export function addUserData(userID, email, displayName, bio) {
     set(ref(db, 'users/' + userID), {
         email: email,
-        image: imageURL,
+        bio: bio,
         uuid: userID,
         displayName: displayName
     });

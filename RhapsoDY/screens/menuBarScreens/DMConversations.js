@@ -31,12 +31,12 @@ export default function DMConversations({ route, navigation }) {
         )}
       />
       <View style={{ bottom: 0, height: 50, width: '100%', position: 'absolute', flexDirection: 'row' }}>
-        <TouchableOpacity 
+        {/* <TouchableOpacity 
         style={{ width: '10%', justifyContent: 'center', alignItems: 'center', marginRight: 5 }} 
-        onPress={() => {/* camera fn */}}>
+        onPress={() => {}}>
             <Ionicons name="camera" size={30} color="black" />
-        </TouchableOpacity>
-        <View style={{ width: '70%', justifyContent: 'center' }}>
+        </TouchableOpacity> */}
+        <View style={{ width: '85%', justifyContent: 'center', marginLeft: 5}}>
           <TextInput 
           placeholder='Type to refresh page' 
           placeholderTextColor="grey" 
